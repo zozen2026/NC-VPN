@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NC VPN - Fast & Reliable Access by NC Studio</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background-color: #f4f5f7;
+      color: #1f2937;
+      line-height: 1.6;
+    }
+
+    /* Top Navigation */
+    header {
+      background-color: #ffffff;
+      border-bottom: 1px solid #e5e7eb;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .nav-container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 16px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: #111827;
+      text-decoration: none;
+    }
+
+    .brand-badge {
+      background: linear-gradient(135deg, #7257ff 0%, #5c41e6 100%);
+      color: #ffffff;
+      padding: 4px 10px;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      letter-spacing: 0.5px;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 24px;
+      align-items: center;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: #4b5563;
+      font-size: 0.92rem;
+      font-weight: 600;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover {
+      color: #7257ff;
+    }
+
+    .nav-cta {
+      background-color: #7257ff;
+      color: #ffffff !important;
+      padding: 8px 18px;
+      border-radius: 999px;
+      font-size: 0.88rem;
+      transition: background-color 0.2s, transform 0.15s;
+    }
+
+    .nav-cta:hover {
+      background-color: #5c41e6;
+      transform: translateY(-1px);
+    }
+
+    /* Hero Section */
+    .hero {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 64px 24px 48px;
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 40px;
+      align-items: center;
+    }
+
+    .studio-tag {
+      display: inline-block;
+      background-color: rgba(114, 87, 255, 0.1);
+      color: #7257ff;
+      font-weight: 700;
+      font-size: 0.8rem;
+      padding: 6px 14px;
+      border-radius: 999px;
+      margin-bottom: 16px;
+    }
+
+    .hero h1 {
+      font-size: 2.5rem;
+      color: #111827;
+      line-height: 1.2;
+      margin-bottom: 16px;
+    }
+
+    .hero h1 span {
+      color: #7257ff;
+    }
+
+    .hero p {
+      font-size: 1.02rem;
+      color: #6b7280;
+      margin-bottom: 28px;
+      max-width: 520px;
+    }
+
+    .hero-buttons {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #7257ff 0%, #5c41e6 100%);
+      color: #ffffff;
+      text-decoration: none;
+      padding: 13px 28px;
+      border-radius: 12px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      box-shadow: 0 8px 20px rgba(114, 87, 255, 0.25);
+      transition: transform 0.15s, box-shadow 0.2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 24px rgba(114, 87, 255, 0.34);
+    }
+
+    .btn-secondary {
+      background-color: #ffffff;
+      color: #111827;
+      border: 1px solid #d1d5db;
+      text-decoration: none;
+      padding: 13px 24px;
+      border-radius: 12px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      transition: border-color 0.2s, background-color 0.2s;
+    }
+
+    .btn-secondary:hover {
+      border-color: #7257ff;
+      background-color: #f9fafb;
+    }
+
+    /* Interactive Connection Preview Card */
+    .status-card {
+      background-color: #ffffff;
+      border: 1px solid #e5e7eb;
+      border-radius: 20px;
+      padding: 30px;
+      box-shadow: 0 12px 30px rgba(17, 24, 39, 0.05);
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .shield-circle {
+      width: 84px;
+      height: 84px;
+      border-radius: 50%;
+      background: rgba(114, 87, 255, 0.1);
+      color: #7257ff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+    }
+
+    .shield-circle.connected {
+      background: rgba(16, 185, 129, 0.12);
+      color: #059669;
+    }
+
+    .shield-circle svg {
+      width: 40px;
+      height: 40px;
+      fill: currentColor;
+    }
+
+    .status-badge {
+      font-size: 0.8rem;
+      font-weight: 700;
+      padding: 5px 14px;
+      border-radius: 999px;
+      background-color: #f3f4f6;
+      color: #4b5563;
+    }
+
+    .status-badge.online {
+      background-color: #def7ec;
+      color: #03543f;
+    }
+
+    .test-connect-btn {
+      width: 100%;
+      padding: 11px;
+      border-radius: 10px;
+      border: none;
+      background-color: #7257ff;
+      color: #ffffff;
+      font-weight: 600;
+      font-size: 0.92rem;
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
+
+    .test-connect-btn:hover {
+      background-color: #5c41e6;
+    }
+
+    /* Features & Servers Section */
+    .section {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 36px 24px;
+    }
+
+    .section-title {
+      font-size: 1.5rem;
+      color: #111827;
+      margin-bottom: 20px;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    .card {
+      background-color: #ffffff;
+      border: 1px solid #e5e7eb;
+      border-radius: 16px;
+      padding: 24px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+    }
+
+    .card h3 {
+      font-size: 1.05rem;
+      color: #111827;
+      margin-bottom: 8px;
+    }
+
+    .card p {
+      font-size: 0.88rem;
+      color: #6b7280;
+    }
+
+    .server-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 12px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: #059669;
+    }
+
+    /* Privacy Box for Google Play */
+    .privacy-box {
+      background-color: #ffffff;
+      border: 1px solid #e5e7eb;
+      border-radius: 16px;
+      padding: 28px;
+    }
+
+    .privacy-box h3 {
+      font-size: 1.15rem;
+      color: #111827;
+      margin-bottom: 10px;
+    }
+
+    .privacy-box p {
+      font-size: 0.9rem;
+      color: #4b5563;
+    }
+
+    footer {
+      text-align: center;
+      padding: 28px 20px;
+      color: #9ca3af;
+      font-size: 0.85rem;
+      border-top: 1px solid #e5e7eb;
+      background-color: #ffffff;
+      margin-top: 30px;
+    }
+
+    @media (max-width: 850px) {
+      .hero {
+        grid-template-columns: 1fr;
+        padding-top: 40px;
+      }
+
+      .grid-3 {
+        grid-template-columns: 1fr;
+      }
+
+      .nav-links a:not(.nav-cta) {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <div class="nav-container">
+      <a href="#" class="brand">
+        <span class="brand-badge">NC</span>
+        <span>NC VPN</span>
+      </a>
+      <nav class="nav-links">
+        <a href="#features">Features</a>
+        <a href="#servers">Servers</a>
+        <a href="#privacy">Privacy Policy</a>
+        <a href="#download" class="nav-cta">Get App</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div>
+      <span class="studio-tag">Official Network by NC Studio</span>
+      <h1>Seamless Access to <span>NC Apps</span> & Websites</h1>
+      <p>NC VPN is engineered to keep your connection fast, encrypted, and uninterrupted so you can access NC Sha and all NC Studio platforms smoothly.</p>
+      <div class="hero-buttons" id="download">
+        <a href="#servers" class="btn-primary">Download Config / APK</a>
+        <a href="#privacy" class="btn-secondary">Google Play Coming Soon</a>
+      </div>
+    </div>
+
+    <!-- Interactive Preview Card -->
+    <div class="status-card">
+      <div id="shieldIcon" class="shield-circle">
+        <svg viewBox="0 0 24 24">
+          <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z"/>
+        </svg>
+      </div>
+      <span id="statusText" class="status-badge">Ready to Connect</span>
+      <h3 style="color:#111827;">NC Smart Tunnel</h3>
+      <p style="font-size:0.85rem; color:#6b7280;">Optimized routing for NC Sha video streaming and low-latency web access.</p>
+      <button type="button" id="previewBtn" class="test-connect-btn" onclick="togglePreviewState()">Preview Connection</button>
+    </div>
+  </section>
+
+  <!-- Features -->
+  <section class="section" id="features">
+    <h2 class="section-title">Why NC VPN?</h2>
+    <div class="grid-3">
+      <div class="card">
+        <h3>Encrypted Tunnel</h3>
+        <p>Protects your connection using modern VPN protocols so your traffic remains private on public and mobile networks.</p>
+      </div>
+      <div class="card">
+        <h3>Built for NC Studio</h3>
+        <p>Tuned specifically to keep NC Sha, web apps, and cloud services responsive without heavy speed loss.</p>
+      </div>
+      <div class="card">
+        <h3>Simple One-Tap App</h3>
+        <p>Clean interface designed for Android with quick server switching and upcoming Google Play Store release.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Servers Status -->
+  <section class="section" id="servers">
+    <h2 class="section-title">Server Nodes</h2>
+    <div class="grid-3">
+      <div class="card">
+        <h3>Europe - Frankfurt</h3>
+        <p>Primary high-speed node for NC Studio platforms.</p>
+        <div class="server-row">
+          <span>Status: Online</span>
+          <span>WireGuard</span>
+        </div>
+      </div>
+      <div class="card">
+        <h3>Middle East - Relay</h3>
+        <p>Low-latency regional routing node.</p>
+        <div class="server-row">
+          <span>Status: Online</span>
+          <span>WireGuard</span>
+        </div>
+      </div>
+      <div class="card">
+        <h3>US East - Virginia</h3>
+        <p>Backup global node for continuous availability.</p>
+        <div class="server-row">
+          <span>Status: Online</span>
+          <span>WireGuard</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Privacy Policy (Required for Google Play Store) -->
+  <section class="section" id="privacy">
+    <div class="privacy-box">
+      <h3>Privacy Policy (NC VPN)</h3>
+      <p>NC VPN uses Android's official VpnService solely to establish a secure, encrypted network tunnel between your device and NC Studio servers. We do not sell user browsing history or personal data. Connection diagnostics are used strictly to maintain server stability and performance.</p>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    NC VPN from NC Studio© — All Rights Reserved
+  </footer>
+
+  <script>
+    let connected = false;
+    function togglePreviewState() {
+      connected = !connected;
+      const shield = document.getElementById('shieldIcon');
+      const status = document.getElementById('statusText');
+      const btn = document.getElementById('previewBtn');
+
+      if (connected) {
+        shield.classList.add('connected');
+        status.classList.add('online');
+        status.innerText = 'Connected • Encrypted';
+        btn.innerText = 'Disconnect Preview';
+      } else {
+        shield.classList.remove('connected');
+        status.classList.remove('online');
+        status.innerText = 'Ready to Connect';
+        btn.innerText = 'Preview Connection';
+      }
+    }
+  </script>
+</body>
+</html>
